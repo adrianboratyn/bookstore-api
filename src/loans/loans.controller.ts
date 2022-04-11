@@ -1,17 +1,20 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import { PageOptionsDto } from 'src/common/dtos/page-options.dto';
+import { PageDto } from 'src/common/dtos/page.dto';
 import { CreateLoanDto } from './dtos/create-loan.dto';
+import { Loan } from './loan.entity';
 import { LoansService } from './loans.service';
 
-@Controller('loan')
+@Controller()
 export class LoansController {
   constructor(private loansService: LoansService) {}
 
-  @Get()
+  @Get('loan')
   getLoans() {
     return this.loansService.getAll();
   }
 
-  @Get('/:id')
+  @Get('loan/:id')
   getLoan(@Param('id') id: string) {
     return this.loansService.getById(+id);
   }
@@ -22,11 +25,14 @@ export class LoansController {
   }
 
   @Get('user/books')
-  getLoansByUser(@Body() body: { id: string }) {
-    return this.loansService.getByUser(+body.id);
+  async getLoansByUser(
+    @Query() pageOptionsDto: PageOptionsDto,
+    @Body() body: { id: string },
+  ): Promise<PageDto<Loan>> {
+    return this.loansService.getByUser(pageOptionsDto, +body.id);
   }
 
-  @Post('/:id/return')
+  @Post('user/book/:id/return')
   endLoan(@Param('id') id: string) {
     return this.loansService.returnBook(+id);
   }

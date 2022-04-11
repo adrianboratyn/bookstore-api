@@ -1,6 +1,9 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Book } from 'src/books/book.entity';
+import { PageInfoDto } from 'src/common/dtos/page-info.dto';
+import { PageOptionsDto } from 'src/common/dtos/page-options.dto';
+import { PageDto } from 'src/common/dtos/page.dto';
 import { Reader } from 'src/readers/reader.entity';
 import { Repository } from 'typeorm';
 import { CreateLoanDto } from './dtos/create-loan.dto';
@@ -53,12 +56,23 @@ export class LoansService {
     return this.loanRepo.save(loan);
   }
 
-  getByUser(id: number) {
-    return this.loanRepo.find({
-      relations: {
-        reader: true,
-      },
-      where: { reader: { id: id } },
-    });
+  async getByUser(
+    pageOptionsDto: PageOptionsDto,
+    readerId: number,
+  ): Promise<PageDto<Loan>> {
+    const queryBuilder = this.loanRepo.createQueryBuilder('loan');
+
+    queryBuilder
+      .leftJoinAndSelect('loan.reader', 'reader')
+      .where('loan.readerId = :id', { id: readerId })
+      .skip(pageOptionsDto.offset)
+      .take(pageOptionsDto.limit);
+
+    const itemCount = await queryBuilder.getCount();
+    const { entities } = await queryBuilder.getRawAndEntities();
+
+    const pageInfoDto = new PageInfoDto({ itemCount, pageOptionsDto });
+
+    return new PageDto(entities, pageInfoDto);
   }
 }
