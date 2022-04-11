@@ -22,5 +22,6 @@ export class Reader {
 
   @Column()
   @IsNotEmpty()
-  telephone: string;
+  @Length(9, 9)
+  telephone: number;
 }

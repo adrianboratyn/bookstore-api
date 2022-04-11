@@ -9,12 +9,12 @@ export class Author {
 
   @Column()
   @IsNotEmpty()
-  @Length(5, 20)
+  @Length(3, 20)
   firstName: string;
 
   @Column()
   @IsNotEmpty()
-  @Length(5, 20)
+  @Length(3, 20)
   lastName: string;
 
   @OneToMany(() => Book, (book) => book.author)

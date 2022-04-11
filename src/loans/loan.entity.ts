@@ -6,7 +6,6 @@ import {
   Entity,
   ManyToOne,
   PrimaryGeneratedColumn,
-  UpdateDateColumn,
 } from 'typeorm';
 
 @Entity()
@@ -14,17 +13,23 @@ export class Loan {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Book, (book) => book.loans, { eager: true })
+  @ManyToOne(() => Book, (book) => book.loans, {
+    eager: true,
+    cascade: ['update'],
+    onDelete: 'SET NULL',
+  })
   book: Book;
 
-  @ManyToOne(() => Reader, (reader) => reader.loans, { eager: true })
+  @ManyToOne(() => Reader, (reader) => reader.loans, {
+    eager: true,
+    onDelete: 'SET NULL',
+  })
   reader: Reader;
 
-  @Column({ default: Date.now() })
+  @Column({ default: new Date() })
   @CreateDateColumn()
   since: Date;
 
   @Column({ nullable: true })
-  @UpdateDateColumn()
   until: Date;
 }

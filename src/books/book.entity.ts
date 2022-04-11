@@ -15,10 +15,16 @@ export class Book {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Genre, (genre) => genre.books, { eager: true })
+  @ManyToOne(() => Genre, (genre) => genre.books, {
+    eager: true,
+    onDelete: 'SET NULL',
+  })
   genre: Genre;
 
-  @ManyToOne(() => Author, (author) => author.books, { eager: true })
+  @ManyToOne(() => Author, (author) => author.books, {
+    eager: true,
+    onDelete: 'SET NULL',
+  })
   author: Author;
 
   @OneToMany(() => Loan, (loan) => loan.book)
