@@ -8,7 +8,10 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
+import { PageOptionsDto } from 'src/common/dtos/page-options.dto';
+import { PageDto } from 'src/common/dtos/page.dto';
 import { Book } from './book.entity';
 import { BooksService } from './books.service';
 import { CreateBookDto } from './dtos/create-book.dto';
@@ -19,8 +22,10 @@ export class BooksController {
   constructor(private booksService: BooksService) {}
 
   @Get()
-  async getBooks(): Promise<Book[]> {
-    return await this.booksService.getAll();
+  async getBooks(
+    @Query() pageOptionsDto: PageOptionsDto,
+  ): Promise<PageDto<Book>> {
+    return await this.booksService.getAll(pageOptionsDto);
   }
 
   @Get('/:id')
