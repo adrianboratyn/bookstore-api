@@ -1,5 +1,5 @@
 import { IsNotEmpty, Length } from 'class-validator';
-import { Book } from 'src/books/book.entity';
+import { Book } from '../books/book.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()

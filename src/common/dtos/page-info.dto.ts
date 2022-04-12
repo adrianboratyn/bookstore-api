@@ -10,8 +10,6 @@ export class PageInfoDto {
 
   constructor({ pageOptionsDto, itemCount }: PageDtoParameters) {
     this.page = pageOptionsDto.page;
-    console.log(this.page);
-
     this.limit = pageOptionsDto.limit;
     this.itemCount = itemCount;
     this.pageCount = Math.ceil(this.itemCount / this.limit);
