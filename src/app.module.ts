@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { CacheModule, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -24,6 +24,11 @@ import { ReadersModule } from './readers/readers.module';
       database: 'test2',
       synchronize: true,
       entities: ['**/*.entity.js'],
+    }),
+    CacheModule.register({
+      ttl: 60,
+      max: 100,
+      isGlobal: true,
     }),
   ],
   controllers: [AppController],
