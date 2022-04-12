@@ -22,7 +22,7 @@ export class BooksService {
   constructor(
     @InjectRepository(Book) private bookRepo: Repository<Book>,
     @InjectRepository(Genre) private genreRepo: Repository<Genre>,
-    @InjectRepository(Genre) private authorRepo: Repository<Author>,
+    @InjectRepository(Author) private authorRepo: Repository<Author>,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
   ) {}
 
