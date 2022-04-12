@@ -1,7 +1,7 @@
 import { Length, Min } from 'class-validator';
-import { Author } from 'src/authors/author.entity';
-import { Genre } from 'src/genres/genre.entity';
-import { Loan } from 'src/loans/loan.entity';
+import { Author } from '../authors/author.entity';
+import { Genre } from '../genres/genre.entity';
+import { Loan } from '../loans/loan.entity';
 import {
   Column,
   Entity,

@@ -1,10 +1,10 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Book } from 'src/books/book.entity';
-import { PageInfoDto } from 'src/common/dtos/page-info.dto';
-import { PageOptionsDto } from 'src/common/dtos/page-options.dto';
-import { PageDto } from 'src/common/dtos/page.dto';
-import { Reader } from 'src/readers/reader.entity';
+import { Book } from '../books/book.entity';
+import { PageInfoDto } from '../common/dtos/page-info.dto';
+import { PageOptionsDto } from '../common/dtos/page-options.dto';
+import { PageDto } from '../common/dtos/page.dto';
+import { Reader } from '../readers/reader.entity';
 import { Repository } from 'typeorm';
 import { CreateLoanDto } from './dtos/create-loan.dto';
 import { Loan } from './loan.entity';

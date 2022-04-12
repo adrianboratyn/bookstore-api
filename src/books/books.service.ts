@@ -10,11 +10,11 @@ import { Repository } from 'typeorm';
 import { Book } from './book.entity';
 import { CreateBookDto } from './dtos/create-book.dto';
 import { UpdateBookDto } from './dtos/update-book.dto';
-import { Genre } from 'src/genres/genre.entity';
-import { Author } from 'src/authors/author.entity';
-import { PageOptionsDto } from 'src/common/dtos/page-options.dto';
-import { PageDto } from 'src/common/dtos/page.dto';
-import { PageInfoDto } from 'src/common/dtos/page-info.dto';
+import { Genre } from '../genres/genre.entity';
+import { Author } from '../authors/author.entity';
+import { PageOptionsDto } from '../common/dtos/page-options.dto';
+import { PageDto } from '../common/dtos/page.dto';
+import { PageInfoDto } from '../common/dtos/page-info.dto';
 import { Cache } from 'cache-manager';
 
 @Injectable()

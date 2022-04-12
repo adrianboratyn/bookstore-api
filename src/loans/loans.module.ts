@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Book } from 'src/books/book.entity';
-import { Reader } from 'src/readers/reader.entity';
+import { Book } from '../books/book.entity';
+import { Reader } from '../readers/reader.entity';
 import { Loan } from './loan.entity';
 
 import { LoansService } from './loans.service';
