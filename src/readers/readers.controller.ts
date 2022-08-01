@@ -1,23 +1,23 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { CreateReaderDto } from './dtos/create-reader.dto';
-import { ReadersService } from './readers.service';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common'
+import { CreateReaderDto } from './dtos/create-reader.dto'
+import { ReadersService } from './readers.service'
 
 @Controller('reader')
 export class ReadersController {
-  constructor(private readersService: ReadersService) {}
+    constructor(private readersService: ReadersService) {}
 
-  @Get()
-  getReaders() {
-    return this.readersService.getAll();
-  }
+    @Get()
+    getReaders() {
+        return this.readersService.getAll()
+    }
 
-  @Get('/:id')
-  getReader(@Param('id') id: string) {
-    return this.readersService.getById(+id);
-  }
+    @Get('/:id')
+    getReader(@Param('id') id: string) {
+        return this.readersService.getById(+id)
+    }
 
-  @Post()
-  addReader(@Body() body: CreateReaderDto) {
-    return this.readersService.add(body);
-  }
+    @Post()
+    addReader(@Body() body: CreateReaderDto) {
+        return this.readersService.add(body)
+    }
 }

@@ -1,11 +1,11 @@
-import { PageInfoDto } from './page-info.dto';
+import { PageInfoDto } from './page-info.dto'
 
 export class PageDto<T> {
-  data: T[];
-  info: PageInfoDto;
+    data: Array<T>
+    info: PageInfoDto
 
-  constructor(data: T[], info: PageInfoDto) {
-    this.data = data;
-    this.info = info;
-  }
+    constructor(data: Array<T>, info: PageInfoDto) {
+        this.data = data
+        this.info = info
+    }
 }

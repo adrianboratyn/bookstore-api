@@ -1,25 +1,26 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { CreateGenreDto } from './dtos/create-genre.dto';
-import { Genre } from './genre.entity';
+import { Injectable } from '@nestjs/common'
+import { InjectRepository } from '@nestjs/typeorm'
+import { Repository } from 'typeorm'
+import { CreateGenreDto } from './dtos/create-genre.dto'
+import { Genre } from './genre.entity'
 
 @Injectable()
 export class GenresService {
-  constructor(@InjectRepository(Genre) private repo: Repository<Genre>) {}
+    constructor(@InjectRepository(Genre) private repo: Repository<Genre>) {}
 
-  getAll() {
-    this.repo.find().then((data) => console.log(data));
-    return this.repo.find();
-  }
+    getAll() {
+        this.repo.find().then(data => console.log(data))
 
-  getById(id: number) {
-    return this.repo.findOne({ where: { id: id } });
-  }
+        return this.repo.find()
+    }
 
-  add(body: CreateGenreDto) {
-    const newGenre = this.repo.create({ ...body });
+    getById(id: number) {
+        return this.repo.findOne({ where: { id } })
+    }
 
-    return this.repo.save(newGenre);
-  }
+    add(body: CreateGenreDto) {
+        const newGenre = this.repo.create({ ...body })
+
+        return this.repo.save(newGenre)
+    }
 }
