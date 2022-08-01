@@ -1,19 +1,19 @@
-import { PageDtoParameters } from '../interfaces/page-dto-parameters.interface';
+import { PageDtoParameters } from '../interfaces/page-dto-parameters.interface'
 
 export class PageInfoDto {
-  page: number;
-  limit: number;
-  itemCount: number;
-  pageCount: number;
-  hasPreviousPage: boolean;
-  hasNextPage: boolean;
+    page: number
+    limit: number
+    itemCount: number
+    pageCount: number
+    hasPreviousPage: boolean
+    hasNextPage: boolean
 
-  constructor({ pageOptionsDto, itemCount }: PageDtoParameters) {
-    this.page = pageOptionsDto.page;
-    this.limit = pageOptionsDto.limit;
-    this.itemCount = itemCount;
-    this.pageCount = Math.ceil(this.itemCount / this.limit);
-    this.hasPreviousPage = this.page > 1;
-    this.hasNextPage = this.page < this.pageCount;
-  }
+    constructor({ pageOptionsDto, itemCount }: PageDtoParameters) {
+        this.page = pageOptionsDto.page
+        this.limit = pageOptionsDto.limit
+        this.itemCount = itemCount
+        this.pageCount = Math.ceil(this.itemCount / this.limit)
+        this.hasPreviousPage = this.page > 1
+        this.hasNextPage = this.page < this.pageCount
+    }
 }
