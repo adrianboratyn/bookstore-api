@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common'
 import { PageOptionsDto, PageDto } from 'lib/dto'
+import { Loan } from 'lib/entities'
 import { CreateLoanDto } from './dtos/create-loan.dto'
-import { Loan } from './loan.entity'
 import { LoansService } from './loans.service'
 
 @Controller()

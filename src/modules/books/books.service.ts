@@ -8,11 +8,9 @@ import {
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import { PageOptionsDto, PageDto, PageInfoDto } from 'lib/dto'
-import { Book } from './book.entity'
+import { Book, Genre, Author } from 'lib/entities'
 import { CreateBookDto } from './dtos/create-book.dto'
 import { UpdateBookDto } from './dtos/update-book.dto'
-import { Genre } from '../../modules/genres/genre.entity'
-import { Author } from '../authors/author.entity'
 import { Cache } from 'cache-manager'
 
 @Injectable()

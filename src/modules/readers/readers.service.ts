@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
+import { Reader } from 'lib/entities'
 import { CreateReaderDto } from './dtos/create-reader.dto'
-import { Reader } from './reader.entity'
 
 @Injectable()
 export class ReadersService {

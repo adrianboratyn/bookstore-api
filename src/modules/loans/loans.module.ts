@@ -1,8 +1,6 @@
 import { Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
-import { Book } from '../books/book.entity'
-import { Reader } from '../readers/reader.entity'
-import { Loan } from './loan.entity'
+import { Book, Reader, Loan } from 'lib/entities'
 import { LoansService } from './loans.service'
 import { LoansController } from './loans.controller'
 

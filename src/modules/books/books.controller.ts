@@ -11,7 +11,7 @@ import {
     Query
 } from '@nestjs/common'
 import { PageOptionsDto, PageDto } from 'lib/dto'
-import { Book } from './book.entity'
+import { Book } from 'lib/entities'
 import { BooksService } from './books.service'
 import { CreateBookDto } from './dtos/create-book.dto'
 import { UpdateBookDto } from './dtos/update-book.dto'

@@ -1,5 +1,5 @@
-import { Book } from '../books/book.entity'
-import { Reader } from '../readers/reader.entity'
+import { Book } from './book.entity'
+import { Reader } from './reader.entity'
 import {
     Column,
     CreateDateColumn,

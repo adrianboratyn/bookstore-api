@@ -1,11 +1,9 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
-import { InjectRepository } from '@nestjs/typeorm'
-import { Book } from '../books/book.entity'
-import { PageInfoDto, PageOptionsDto, PageDto } from 'lib/dto'
-import { Reader } from '../readers/reader.entity'
 import { Repository } from 'typeorm'
+import { InjectRepository } from '@nestjs/typeorm'
+import { Book, Loan, Reader } from 'lib/entities'
+import { PageInfoDto, PageOptionsDto, PageDto } from 'lib/dto'
 import { CreateLoanDto } from './dtos/create-loan.dto'
-import { Loan } from './loan.entity'
 
 @Injectable()
 export class LoansService {

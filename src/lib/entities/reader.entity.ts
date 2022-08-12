@@ -1,5 +1,5 @@
 import { IsNotEmpty, Length } from 'class-validator'
-import { Loan } from '../loans/loan.entity'
+import { Loan } from './loan.entity'
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
 
 @Entity()

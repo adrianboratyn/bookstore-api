@@ -2,6 +2,7 @@ import { CacheModule, Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
+import * as Entities from 'lib/entities'
 import { AuthorsModule } from 'modules/authors'
 import { BooksModule } from 'modules/books'
 import { GenresModule } from 'modules/genres'
@@ -23,7 +24,7 @@ import { ReadersModule } from 'modules/readers'
             password: 'root123@',
             database: 'test2',
             synchronize: true,
-            entities: ['**/*.entity.js'],
+            entities: Object.values(Entities),
         }),
         CacheModule.register({
             ttl: 60,
