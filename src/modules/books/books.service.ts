@@ -7,14 +7,12 @@ import {
 } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
+import { PageOptionsDto, PageDto, PageInfoDto } from 'lib/dto'
 import { Book } from './book.entity'
 import { CreateBookDto } from './dtos/create-book.dto'
 import { UpdateBookDto } from './dtos/update-book.dto'
-import { Genre } from '../genres/genre.entity'
+import { Genre } from '../../modules/genres/genre.entity'
 import { Author } from '../authors/author.entity'
-import { PageOptionsDto } from '../common/dtos/page-options.dto'
-import { PageDto } from '../common/dtos/page.dto'
-import { PageInfoDto } from '../common/dtos/page-info.dto'
 import { Cache } from 'cache-manager'
 
 @Injectable()

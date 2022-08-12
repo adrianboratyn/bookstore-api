@@ -1,4 +1,4 @@
-import { PageDtoParameters } from '../interfaces/page-dto-parameters.interface'
+import { PageDtoParameters } from 'lib/interface'
 
 export class PageInfoDto {
     page: number

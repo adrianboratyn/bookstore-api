@@ -10,8 +10,7 @@ import {
     Post,
     Query
 } from '@nestjs/common'
-import { PageOptionsDto } from '../common/dtos/page-options.dto'
-import { PageDto } from '../common/dtos/page.dto'
+import { PageOptionsDto, PageDto } from 'lib/dto'
 import { Book } from './book.entity'
 import { BooksService } from './books.service'
 import { CreateBookDto } from './dtos/create-book.dto'
