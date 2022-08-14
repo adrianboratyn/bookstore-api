@@ -1,8 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { getRepositoryToken } from '@nestjs/typeorm'
-import { Genre } from '../genres/genre.entity'
-import { Author } from '../authors/author.entity'
-import { Book } from './book.entity'
+import { Genre, Author, Book } from 'lib/entities'
 import { BooksService } from './books.service'
 import { CACHE_MANAGER } from '@nestjs/common'
 

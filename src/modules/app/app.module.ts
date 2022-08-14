@@ -1,8 +1,9 @@
-import { CacheModule, Module } from '@nestjs/common'
+import { Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
+import { ConfigModule } from '@nestjs/config'
+import { getConfig, envValidation } from 'lib/config'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
-import * as Entities from 'lib/entities'
 import { AuthorsModule } from 'modules/authors'
 import { BooksModule } from 'modules/books'
 import { GenresModule } from 'modules/genres'
@@ -16,21 +17,17 @@ import { ReadersModule } from 'modules/readers'
         GenresModule,
         LoansModule,
         ReadersModule,
-        TypeOrmModule.forRoot({
-            type: 'mysql',
-            host: 'localhost',
-            port: 3306,
-            username: 'root',
-            password: 'root123@',
-            database: 'test2',
-            synchronize: true,
-            entities: Object.values(Entities),
+        TypeOrmModule.forRootAsync({
+            useFactory: () => getConfig().typeORMConfig
         }),
-        CacheModule.register({
-            ttl: 60,
-            max: 100,
+        ConfigModule.forRoot({
             isGlobal: true,
-        }),
+            validate: envValidation,
+            validationOptions: {
+                allowUknown: true,
+                abortEarly: true
+            }
+        })
     ],
     controllers: [AppController],
     providers: [AppService],

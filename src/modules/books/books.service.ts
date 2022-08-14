@@ -1,8 +1,6 @@
 import {
-    CACHE_MANAGER,
     HttpException,
     HttpStatus,
-    Inject,
     Injectable,
 } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
@@ -11,15 +9,13 @@ import { PageOptionsDto, PageDto, PageInfoDto } from 'lib/dto'
 import { Book, Genre, Author } from 'lib/entities'
 import { CreateBookDto } from './dtos/create-book.dto'
 import { UpdateBookDto } from './dtos/update-book.dto'
-import { Cache } from 'cache-manager'
 
 @Injectable()
 export class BooksService {
     constructor(
       @InjectRepository(Book) private bookRepo: Repository<Book>,
       @InjectRepository(Genre) private genreRepo: Repository<Genre>,
-      @InjectRepository(Author) private authorRepo: Repository<Author>,
-      @Inject(CACHE_MANAGER) private cacheManager: Cache,
+      @InjectRepository(Author) private authorRepo: Repository<Author>
     ) {}
 
     async getAll(pageOptionsDto: PageOptionsDto): Promise<PageDto<Book>> {
