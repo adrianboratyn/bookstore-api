@@ -58,7 +58,7 @@ export class BooksService {
     }
 
     async remove(id: number) {
-        const book = await this.bookRepo.findOne({ where: { bookId: id } })
+        const book = await this.bookRepo.findOneOrFail({ where: { bookId: id } })
 
         if (book === null) {
             return new HttpException('Book not found', HttpStatus.NOT_FOUND)

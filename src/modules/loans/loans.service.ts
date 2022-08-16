@@ -28,7 +28,7 @@ export class LoansService {
             where: { readerId: body.readerId },
         })
 
-        if (book === null) {
+        if (!book) {
             return new HttpException('Book not found', HttpStatus.NOT_FOUND)
         }
 
