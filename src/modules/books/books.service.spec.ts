@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { getRepositoryToken } from '@nestjs/typeorm'
-import { Genre, Author, Book } from 'lib/entities'
+import { GenreEntity, AuthorEntity, BookEntity } from 'lib/entities'
 import { BooksService } from './books.service'
 import { CACHE_MANAGER } from '@nestjs/common'
 
@@ -26,15 +26,15 @@ describe('BooksService', () => {
             providers: [
                 BooksService,
                 {
-                    provide: getRepositoryToken(Book),
+                    provide: getRepositoryToken(BookEntity),
                     useValue: mockBookRepository,
                 },
                 {
-                    provide: getRepositoryToken(Author),
+                    provide: getRepositoryToken(AuthorEntity),
                     useValue: mockAuthorRepository,
                 },
                 {
-                    provide: getRepositoryToken(Genre),
+                    provide: getRepositoryToken(GenreEntity),
                     useValue: mockGenreRepository,
                 },
                 {

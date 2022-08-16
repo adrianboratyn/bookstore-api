@@ -1,22 +1,44 @@
-import { IsNotEmpty, Length } from 'class-validator'
-import { Book } from './book.entity'
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
+import {
+    Column,
+    CreateDateColumn,
+    Entity,
+    Generated,
+    Index,
+    OneToMany,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn
+} from 'typeorm'
+import { BookEntity } from './book.entity'
 
-@Entity()
-export class Genre {
+@Entity({ name: 'genre' })
+export class GenreEntity {
     @PrimaryGeneratedColumn()
-    id: number
+    genreId: number
 
-    @OneToMany(() => Book, book => book.genre)
-    books: Array<Book>
+    @Generated('uuid')
+    @Index({ unique: true })
+    @Column()
+    genreUUID: string
 
     @Column()
-    @IsNotEmpty()
-    @Length(5, 20)
     name: string
 
     @Column()
-    @IsNotEmpty()
-    @Length(5, 300)
     description: string
+
+    @Index()
+    @Column({
+        type: Boolean,
+        default: false
+    })
+    isDeleted: boolean
+
+    @CreateDateColumn({ select: false })
+    createdAt: Date
+
+    @UpdateDateColumn({ select: false })
+    updatedAt: Date
+
+    @OneToMany(() => BookEntity, book => book.genre)
+    books: Array<BookEntity>
 }

@@ -11,7 +11,7 @@ import {
     Query
 } from '@nestjs/common'
 import { PageOptionsDto, PageDto } from 'lib/dto'
-import { Book } from 'lib/entities'
+import { BookEntity } from 'lib/entities'
 import { BooksService } from './books.service'
 import { CreateBookDto } from './dtos/create-book.dto'
 import { UpdateBookDto } from './dtos/update-book.dto'
@@ -23,7 +23,7 @@ export class BooksController {
     @Get()
     async getBooks(
       @Query() pageOptionsDto: PageOptionsDto,
-    ): Promise<PageDto<Book>> {
+    ): Promise<PageDto<BookEntity>> {
         return this.booksService.getAll(pageOptionsDto)
     }
 
