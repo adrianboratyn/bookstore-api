@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
-import { Genre } from 'lib/entities'
+import { GenreEntity } from 'lib/entities'
 import { CreateGenreDto } from './dtos/create-genre.dto'
 
 @Injectable()
 export class GenresService {
-    constructor(@InjectRepository(Genre) private repo: Repository<Genre>) {}
+    constructor(@InjectRepository(GenreEntity) private repo: Repository<GenreEntity>) {}
 
     getAll() {
         this.repo.find().then(data => console.log(data))
@@ -15,7 +15,7 @@ export class GenresService {
     }
 
     getById(id: number) {
-        return this.repo.findOne({ where: { id } })
+        return this.repo.findOne({ where: { genreId: id } })
     }
 
     add(body: CreateGenreDto) {

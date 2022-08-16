@@ -1,27 +1,47 @@
-import { IsNotEmpty, Length } from 'class-validator'
-import { Loan } from './loan.entity'
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
+import {
+    Column,
+    CreateDateColumn,
+    Entity,
+    Generated,
+    Index,
+    OneToMany,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn
+} from 'typeorm'
+import { LoanEntity } from './loan.entity'
 
-@Entity()
-export class Reader {
+@Entity({ name: 'reader' })
+export class ReaderEntity {
     @PrimaryGeneratedColumn()
-    id: number
+    readerId: number
 
-    @OneToMany(() => Loan, loan => loan.reader)
-    loans: Array<Loan>
+    @Generated('uuid')
+    @Index({ unique: true })
+    @Column()
+    readerUUID: string
 
     @Column()
-    @IsNotEmpty()
-    @Length(5, 20)
     firstName: string
 
     @Column()
-    @IsNotEmpty()
-    @Length(5, 20)
     lastName: string
 
     @Column()
-    @IsNotEmpty()
-    @Length(9, 9)
-    telephone: number
+    phoneNumber: number
+
+    @Index()
+    @Column({
+        type: Boolean,
+        default: false
+    })
+    isDeleted: boolean
+
+    @CreateDateColumn({ select: false })
+    createdAt: Date
+
+    @UpdateDateColumn({ select: false })
+    updatedAt: Date
+
+    @OneToMany(() => LoanEntity, loan => loan.reader)
+    loans: Array<LoanEntity>
 }

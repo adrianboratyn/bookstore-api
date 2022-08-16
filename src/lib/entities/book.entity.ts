@@ -1,54 +1,69 @@
-import { Length, Min } from 'class-validator'
-import { Author } from './author.entity'
-import { Genre } from './genre.entity'
-import { Loan } from './loan.entity'
 import {
     Column,
+    CreateDateColumn,
     Entity,
+    Generated,
+    Index,
+    JoinColumn,
     ManyToOne,
     OneToMany,
-    PrimaryGeneratedColumn
+    PrimaryGeneratedColumn,
+    UpdateDateColumn
 } from 'typeorm'
+import { AuthorEntity } from './author.entity'
+import { GenreEntity } from './genre.entity'
+import { LoanEntity } from './loan.entity'
 
-@Entity()
-export class Book {
+@Entity({ name: 'book' })
+export class BookEntity {
     @PrimaryGeneratedColumn()
-    id: number
+    bookId: number
 
-    @ManyToOne(() => Genre, genre => genre.books, {
-        eager: true,
-        onDelete: 'SET NULL',
-    })
-    genre: Genre
-
-    @ManyToOne(() => Author, author => author.books, {
-        eager: true,
-        onDelete: 'SET NULL',
-    })
-    author: Author
-
-    @OneToMany(() => Loan, loan => loan.book)
-    loans: Array<Loan>
+    @Generated('uuid')
+    @Index({ unique: true })
+    @Column()
+    bookUUID: string
 
     @Column()
-    @Length(5, 50)
     title: string
 
     @Column()
-    @Min(0)
     pages: number
 
     @Column()
     year: number
 
     @Column()
-    @Min(0)
     quantity: number
 
     @Column()
     ISBN: string
 
     @Column()
-    @Min(0)
     cost: number
+
+    @Index()
+    @Column({
+        type: Boolean,
+        default: false
+    })
+    isDeleted: boolean
+
+    @CreateDateColumn({ select: false })
+    createdAt: Date
+
+    @UpdateDateColumn({ select: false })
+    updatedAt: Date
+
+    @ManyToOne(() => GenreEntity, genre => genre.books)
+    @JoinColumn({ name: 'genreId' })
+    genre: GenreEntity
+
+    @ManyToOne(() => AuthorEntity, author => author.books)
+    @JoinColumn({ name: 'authorId' })
+    author: AuthorEntity
+
+    @OneToMany(() => LoanEntity, loan => loan.book)
+    loans: Array<LoanEntity>
+
 }

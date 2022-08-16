@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common'
 import { PageOptionsDto, PageDto } from 'lib/dto'
-import { Loan } from 'lib/entities'
+import { LoanEntity } from 'lib/entities'
 import { CreateLoanDto } from './dtos/create-loan.dto'
 import { LoansService } from './loans.service'
 
@@ -27,7 +27,7 @@ export class LoansController {
     async getLoansByUser(
       @Query() pageOptionsDto: PageOptionsDto,
       @Body() body: { id: string },
-    ): Promise<PageDto<Loan>> {
+    ): Promise<PageDto<LoanEntity>> {
         return this.loansService.getByUser(pageOptionsDto, +body.id)
     }
 

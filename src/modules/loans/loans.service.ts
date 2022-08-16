@@ -1,16 +1,17 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { Repository } from 'typeorm'
 import { InjectRepository } from '@nestjs/typeorm'
-import { Book, Loan, Reader } from 'lib/entities'
+import { getUnixTime } from 'date-fns'
+import { BookEntity, LoanEntity, ReaderEntity } from 'lib/entities'
 import { PageInfoDto, PageOptionsDto, PageDto } from 'lib/dto'
 import { CreateLoanDto } from './dtos/create-loan.dto'
 
 @Injectable()
 export class LoansService {
     constructor(
-      @InjectRepository(Loan) private loanRepo: Repository<Loan>,
-      @InjectRepository(Book) private bookRepo: Repository<Book>,
-      @InjectRepository(Reader) private readerRepo: Repository<Reader>,
+      @InjectRepository(LoanEntity) private loanRepo: Repository<LoanEntity>,
+      @InjectRepository(BookEntity) private bookRepo: Repository<BookEntity>,
+      @InjectRepository(ReaderEntity) private readerRepo: Repository<ReaderEntity>,
     ) {}
 
     getAll() {
@@ -18,13 +19,13 @@ export class LoansService {
     }
 
     getById(id: number) {
-        return this.loanRepo.findOne({ where: { id } })
+        return this.loanRepo.findOne({ where: { loanId: id } })
     }
 
     async loanBook(body: CreateLoanDto) {
-        const book = await this.bookRepo.findOne({ where: { id: body.bookId } })
+        const book = await this.bookRepo.findOne({ where: { bookId: body.bookId } })
         const reader = await this.readerRepo.findOne({
-            where: { id: body.readerId },
+            where: { readerId: body.readerId },
         })
 
         if (book === null) {
@@ -50,8 +51,8 @@ export class LoansService {
     }
 
     async returnBook(id: number) {
-        const loan = await this.loanRepo.findOneOrFail({ where: { id } })
-        loan.until = new Date()
+        const loan = await this.loanRepo.findOneOrFail({ where: { loanId: id } })
+        loan.untilDate = getUnixTime(new Date())
         loan.book.quantity += 1
 
         return this.loanRepo.save(loan)
@@ -60,7 +61,7 @@ export class LoansService {
     async getByUser(
         pageOptionsDto: PageOptionsDto,
         readerId: number,
-    ): Promise<PageDto<Loan>> {
+    ): Promise<PageDto<LoanEntity>> {
         const queryBuilder = this.loanRepo.createQueryBuilder('loan')
 
         queryBuilder

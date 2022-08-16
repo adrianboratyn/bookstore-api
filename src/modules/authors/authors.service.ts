@@ -1,19 +1,19 @@
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
-import { Author } from 'lib/entities'
+import { AuthorEntity } from 'lib/entities'
 import { CreateAuthorDto } from './dtos/create-author.dto'
 
 @Injectable()
 export class AuthorsService {
-    constructor(@InjectRepository(Author) private repo: Repository<Author>) {}
+    constructor(@InjectRepository(AuthorEntity) private repo: Repository<AuthorEntity>) {}
 
     getAll() {
         return this.repo.find()
     }
 
     getById(id: number) {
-        return this.repo.findOne({ where: { id } })
+        return this.repo.findOne({ where: { authorId: id } })
     }
 
     add(body: CreateAuthorDto) {

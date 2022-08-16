@@ -1,22 +1,47 @@
-import { IsNotEmpty, Length } from 'class-validator'
-import { Book } from './book.entity'
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
+import {
+    Column,
+    CreateDateColumn,
+    Entity,
+    Generated,
+    Index,
+    OneToMany,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn
+} from 'typeorm'
+import { BookEntity } from 'lib/entities'
 
-@Entity()
-export class Author {
+@Entity({ name: 'author' })
+export class AuthorEntity {
     @PrimaryGeneratedColumn()
-    id: number
+    authorId: number
+
+    @Generated('uuid')
+    @Index({ unique: true })
+    @Column()
+    authorUUID: string
 
     @Column()
-    @IsNotEmpty()
-    @Length(3, 20)
     firstName: string
 
     @Column()
-    @IsNotEmpty()
-    @Length(3, 20)
     lastName: string
 
-    @OneToMany(() => Book, book => book.author)
-    books: Array<Book>
+    @Column()
+    description: string
+
+    @Index()
+    @Column({
+        type: Boolean,
+        default: false
+    })
+    isDeleted: boolean
+
+    @CreateDateColumn({ select: false })
+    createdAt: Date
+
+    @UpdateDateColumn({ select: false })
+    updatedAt: Date
+
+    @OneToMany(() => BookEntity, book => book.author)
+    books: Array<BookEntity>
 }
