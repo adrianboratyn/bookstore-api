@@ -5,7 +5,11 @@ import { AuthorsController } from './authors.controller'
 import { AuthorsService } from './authors.service'
 
 @Module({
-    imports: [TypeOrmModule.forFeature([AuthorEntity])],
+    imports: [
+        TypeOrmModule.forFeature([
+            AuthorEntity
+        ])
+    ],
     controllers: [AuthorsController],
     providers: [AuthorsService],
 })

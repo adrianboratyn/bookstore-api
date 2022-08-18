@@ -1,23 +1,26 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common'
+import { Body, Controller, Get, Post, Query } from '@nestjs/common'
 import { AuthorsService } from './authors.service'
-import { CreateAuthorDto } from './dtos/create-author.dto'
+import { CreateAuthorDto, GetAuthorDto } from './dto'
+import { AUTHOR } from './constants'
 
-@Controller('author')
+@Controller(AUTHOR)
 export class AuthorsController {
-    constructor(private authorsService: AuthorsService) {}
+    constructor(
+        private readonly authorsService: AuthorsService
+    ) {}
 
     @Get()
     getAuthors() {
         return this.authorsService.getAll()
     }
 
-    @Get('/:id')
-    getAuthor(@Param('id') id: string) {
-        return this.authorsService.getById(+id)
+    @Get('details')
+    getAuthor(@Query() dto: GetAuthorDto) {
+        return this.authorsService.getDetails(dto)
     }
 
     @Post()
-    addAuthor(@Body() body: CreateAuthorDto) {
-        return this.authorsService.add(body)
+    addAuthor(@Body() dto: CreateAuthorDto) {
+        return this.authorsService.add(dto)
     }
 }

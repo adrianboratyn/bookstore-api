@@ -1,24 +1,64 @@
-import { Injectable } from '@nestjs/common'
+import { BadRequestException, HttpStatus, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
+import { v4 } from 'uuid'
 import { AuthorEntity } from 'lib/entities'
-import { CreateAuthorDto } from './dtos/create-author.dto'
+import { ErrorResponse } from 'lib/common'
+import { en_US } from 'lib/locale'
+import { CreateAuthorDto, GetAuthorDto } from './dto'
+import { GetAuthorDao } from './dao'
 
 @Injectable()
 export class AuthorsService {
-    constructor(@InjectRepository(AuthorEntity) private repo: Repository<AuthorEntity>) {}
+    constructor(
+        @InjectRepository(AuthorEntity) private authorRepository: Repository<AuthorEntity>
+    ) {}
 
     getAll() {
-        return this.repo.find()
+        return this.authorRepository
+            .createQueryBuilder('A')
+            .select(`
+                A.authorUUID,
+                A.firstName,
+                A.lastName,
+                A.description
+            `)
+            .where('A.isDeleted = 0')
+            .getRawMany<GetAuthorDao>()
     }
 
-    getById(id: number) {
-        return this.repo.findOne({ where: { authorId: id } })
+    async getDetails(dto: GetAuthorDto) {
+        const author = await this.authorRepository
+            .createQueryBuilder('A')
+            .select(`
+                A.authorUUID,
+                A.firstName,
+                A.lastName,
+                A.description
+            `)
+            .where('A.authorUUID = :authorUUID', { authorUUID: dto.authorUUID })
+            .andWhere('A.isDeleted = 0')
+            .getRawOne<GetAuthorDao>()
+
+        if (!author) {
+            const error: ErrorResponse = {
+                code: HttpStatus.BAD_REQUEST,
+                message: en_US.author.authorNotFound
+            }
+
+            throw new BadRequestException(error)
+        }
+
+        return author
     }
 
-    add(body: CreateAuthorDto) {
-        const newAuthor = this.repo.create({ ...body })
+    async add(dto: CreateAuthorDto) {
+        const authorUUID = v4()
+        await this.authorRepository.insert({
+            authorUUID,
+            ...dto
+        })
 
-        return this.repo.save(newAuthor)
+        return this.getDetails({ authorUUID })
     }
 }
